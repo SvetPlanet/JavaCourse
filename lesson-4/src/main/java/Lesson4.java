@@ -175,12 +175,12 @@ public class Lesson4 {
     }
 
     public static boolean checkWin(char symbol){
-        if (checkRow(symbol) || checkColumn(symbol) || checkSubDiagonal(symbol) || checkMainDiagonal(symbol))
+        if (checkRows(symbol) || checkColumns(symbol) || checkSubDiagonals(symbol) || checkMainDiagonals(symbol))
             return true;
         return false;
     }
 
-    public static boolean checkRow(char symbol){
+    public static boolean checkRows(char symbol){
         boolean winRow;
 
         for (int i = 0; i < SIZE; i++){
@@ -189,8 +189,10 @@ public class Lesson4 {
                 initWinWay();
 
                 for (int j = k; j < k + DOTS_TO_WIN; j++){
-                    if (map[i][j] != symbol)
+                    if (map[i][j] != symbol){
                         winRow = false;
+                        break;
+                    }
                     else setWinWayPoint(j - k, i, j);
                 }
 
@@ -202,7 +204,7 @@ public class Lesson4 {
         return false;
     }
 
-    public static boolean checkColumn(char symbol) {
+    public static boolean checkColumns(char symbol) {
         boolean winColumn;
 
         for (int i = 0; i < SIZE; i++){
@@ -211,9 +213,11 @@ public class Lesson4 {
                 initWinWay();
 
                 for (int j = k; j < k + DOTS_TO_WIN; j++){
-                    if (map[j][i] != symbol)
+                    if (map[j][i] != symbol){
                         winColumn = false;
-                    else setWinWayPoint(j - k, i, j);
+                        break;
+                    }
+                    else setWinWayPoint(j - k, j, i);
                 }
 
                 if (winColumn)
@@ -224,7 +228,7 @@ public class Lesson4 {
         return false;
     }
 
-    public static boolean checkSubDiagonal(char symbol){
+    public static boolean checkSubDiagonals(char symbol){
         boolean winSubDiagonal;
         int tempRow, tempCol, step;
 
@@ -238,7 +242,10 @@ public class Lesson4 {
 
                 while (step > 0 ){
                     if (map[tempRow][tempCol] != symbol)
+                    {
                         winSubDiagonal = false;
+                        break;
+                    }
                     setWinWayPoint(DOTS_TO_WIN - step, tempRow, tempCol);
                     step--;
                     tempRow--;
@@ -253,7 +260,7 @@ public class Lesson4 {
         return false;
     }
 
-    public static boolean checkMainDiagonal(char symbol){
+    public static boolean checkMainDiagonals(char symbol){
         boolean winMainDiagonal;
         int tempRow, tempCol, step;
 
@@ -266,8 +273,10 @@ public class Lesson4 {
                 initWinWay();
 
                 while (step > 0 ){
-                    if (map[tempRow][tempCol] != symbol)
+                    if (map[tempRow][tempCol] != symbol){
                         winMainDiagonal = false;
+                        break;
+                    }
                     setWinWayPoint((DOTS_TO_WIN - step), tempRow, tempCol);
                     step--;
                     tempRow++;
